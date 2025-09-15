@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+# Ignore appsettings for development
+appsettings.Development.json
+# Ignore appsettings for development
+appsettings.json
