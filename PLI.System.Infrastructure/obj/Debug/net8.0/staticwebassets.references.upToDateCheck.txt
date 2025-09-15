@@ -1,5 +1,0 @@
-C:\Users\PC\Desktop\Main Projects\pli-sys-be\PLI.System.Core\obj\Debug\net8.0\staticwebassets.build.json
-C:\Users\PC\Desktop\Main Projects\pli-sys-be\PLI.System.Core\obj\Debug\net8.0\staticwebassets.build.json
-C:\Users\PC\Desktop\Main Projects\pli-sys-be\PLI.System.Core\obj\Debug\net8.0\staticwebassets.build.json
-C:\Users\PC\Desktop\Main Projects\pli-sys-be\PLI.System.Core\obj\Debug\net8.0\staticwebassets.build.json
-C:\Users\PC\Desktop\Main Projects\pli-sys-be\PLI.System.Core\obj\Debug\net8.0\staticwebassets.build.json
