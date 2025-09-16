@@ -7,3 +7,8 @@
 appsettings.Development.json
 # Ignore appsettings for development
 appsettings.json
+
+
+/obj
+/bin
+# Ignore Visual Studio temporary files, build results
