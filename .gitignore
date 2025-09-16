@@ -9,6 +9,7 @@ appsettings.Development.json
 appsettings.json
 
 
-/obj
-/bin
+/PLI.System.API/obj/
+
+/PLI.System.API/bin/
 # Ignore Visual Studio temporary files, build results
