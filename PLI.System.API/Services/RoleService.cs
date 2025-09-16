@@ -1,15 +1,11 @@
 ﻿using PLI.System.API.Entities.Business;
 using PLI.System.API.Entities.General;
 using PLI.System.API.Interfaces.IMapper;
-using PLI.System.API.Services;
 using PLI.System.Core.Services;
-using PLI.System.API.Entities.Business;
-using PLI.System.API.Entities.General;
-using PLI.System.API.Interfaces.IMapper;
 using PLI.System.API.Interfaces.IRepositories;
 using PLI.System.API.Interfaces.IServices;
 
-namespace Project.Core.Services
+namespace PLI.System.API.Services
 {
     public class RoleService : BaseService<Role, RoleViewModel>, IRoleService
     {
