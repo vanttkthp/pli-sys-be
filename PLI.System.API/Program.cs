@@ -1,10 +1,16 @@
 using Asp.Versioning;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using PLI.System.API.Extensions;
 using PLI.System.API.Common;
 using PLI.System.API.Data;
+using PLI.System.API.Entities.General;
+using PLI.System.API.Extensions;
+using PLI.System.API.Interfaces.IRepositories;
+using PLI.System.API.Interfaces.IServices;
+using PLI.System.API.Repositories;
+using PLI.System.API.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +36,7 @@ builder.Services.AddLogging(loggingBuilder =>
 //builder.Services.RegisterSecurityService(builder.Configuration);
 //builder.Services.RegisterService();
 //builder.Services.RegisterMapperService();
-builder.Services.AddAuthorization();
+//builder.Services.AddAuthorization();
 
 // API Versioning
 //builder.Services
@@ -94,7 +100,12 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
 
 // Database seeding
 using (var scope = app.Services.CreateScope())
@@ -142,7 +153,6 @@ app.UseAuthorization();
 
 #region Custom Middleware
 //app.UseMiddleware<RequestResponseLoggingMiddleware>();
-
 #endregion
 
 app.UseEndpoints(endpoints =>

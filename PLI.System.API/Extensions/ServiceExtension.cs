@@ -13,7 +13,6 @@ namespace PLI.System.API.Extensions
             services.AddSingleton<IUserContext, UserContext>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAuthService, AuthService>();
 
             #endregion
 

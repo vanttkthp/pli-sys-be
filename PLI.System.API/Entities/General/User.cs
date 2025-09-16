@@ -15,5 +15,7 @@ namespace PLI.System.API.Entities.General
         public string Password { get; set; }
         [Required, StringLength(maximumLength: 100, MinimumLength = 2)]
         public string Email { get; set; }
+        public string? Organization { get; set; }
+        public string? JobDescription { get; set; }
     }
 }

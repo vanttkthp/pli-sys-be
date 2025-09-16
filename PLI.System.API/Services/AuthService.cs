@@ -1,52 +1,17 @@
-﻿using PLI.System.API.Entities.Business;
-using PLI.System.API.Entities.General;
-using PLI.System.API.Interfaces.IMapper;
-using PLI.System.API.Interfaces.IRepositories;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using PLI.System.API.Common;
+using PLI.System.API.Entities.Business;
+using PLI.System.API.Helpers;
 using PLI.System.API.Interfaces.IServices;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
-namespace PLI.System.API.Services
+namespace PLI.System.API.Controllers.V1
 {
-    public class AuthService : IAuthService
-    {
-        private readonly IAuthRepository _authRepository;
+    //[ApiVersion("1.0")]
+    //[Route("api/v{version:apiVersion}/[controller]")]
 
-        public AuthService(IAuthRepository authRepository)
-        {
-            _authRepository = authRepository;
-        }
-
-        public async Task<ResponseViewModel<UserViewModel>> Login(string userName, string password)
-        {
-            var result = await _authRepository.Login(userName, password);
-            if (result.Success)
-            {
-                return new ResponseViewModel<UserViewModel>
-                {
-                    Success = true,
-                    Message = "Login successful",
-                    Data = result.Data
-                };
-            }
-            else
-            {
-                return new ResponseViewModel<UserViewModel>
-                {
-                    Success = false,
-                    Message = "Login failed",
-                    Error = new ErrorViewModel
-                    {
-                        Code = "LOGIN_ERROR",
-                        Message = "Incorrect username or password. Please check your credentials and try again."
-                    }
-                };
-            }
-        }
-
-        public async Task Logout()
-        {
-            await _authRepository.Logout();
-        }
-
-
-    }
 }

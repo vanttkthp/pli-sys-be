@@ -34,16 +34,15 @@ namespace PLI.System.API.Repositories
                 return IdentityResult.Failed(new IdentityError { Code = "RoleNotFound", Description = $"Role with Id {model.RoleId} not found." });
             }
 
-            if (!role.IsActive)
-            {
-                return IdentityResult.Failed(new IdentityError { Code = "RoleInactive", Description = $"Inactive Role" });
-            }
+            //if (!role.IsActive)
+            //{
+            //    return IdentityResult.Failed(new IdentityError { Code = "RoleInactive", Description = $"Inactive Role" });
+            //}
 
             var user = new User
             {
                 FullName = model.FullName,
                 EmployeeId = model.EmployeeId,
-                Password = model.Password,
                 Email = model.Email,
                 IsActive = true,
                 //RoleId = model.RoleId,
@@ -53,10 +52,10 @@ namespace PLI.System.API.Repositories
             var result = await _userManager.CreateAsync(user, model.Password);
 
             // If user creation is successful, assign the role to the user
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, role.Name);
-            }
+            //if (result.Succeeded)
+            //{
+            //    await _userManager.AddToRoleAsync(user, role.Name);
+            //}
 
             return result;
         }
@@ -77,10 +76,10 @@ namespace PLI.System.API.Repositories
                 return IdentityResult.Failed(new IdentityError { Code = "RoleNotFound", Description = $"Role with Id {model.RoleId} not found." });
             }
 
-            if (!role.IsActive)
-            {
-                return IdentityResult.Failed(new IdentityError { Code = "RoleInactive", Description = $"Inactive Role" });
-            }
+            //if (!role.IsActive)
+            //{
+            //    return IdentityResult.Failed(new IdentityError { Code = "RoleInactive", Description = $"Inactive Role" });
+            //}
 
             // Update the user properties
             user.FullName = model.FullName;
@@ -93,15 +92,15 @@ namespace PLI.System.API.Repositories
             var result = await _userManager.UpdateAsync(user);
 
             // If user update is successful, assign the role to the user
-            if (result.Succeeded)
-            {
-                // Remove existing roles
-                var userRoles = await _userManager.GetRolesAsync(user);
-                await _userManager.RemoveFromRolesAsync(user, userRoles);
+            //if (result.Succeeded)
+            //{
+            //    // Remove existing roles
+            //    var userRoles = await _userManager.GetRolesAsync(user);
+            //    await _userManager.RemoveFromRolesAsync(user, userRoles);
 
-                // Add the new role
-                await _userManager.AddToRoleAsync(user, role.Name);
-            }
+            //    // Add the new role
+            //    await _userManager.AddToRoleAsync(user, role.Name);
+            //}
 
             return result;
         }

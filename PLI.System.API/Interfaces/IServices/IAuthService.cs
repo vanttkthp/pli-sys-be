@@ -4,7 +4,7 @@ namespace PLI.System.API.Interfaces.IServices
 {
     public interface IAuthService
     {
-        Task<ResponseViewModel<UserViewModel>> Login(string userName, string password);
+        Task<ResponseViewModel<UserViewModel>> Login(string employeeId, string password);
         Task Logout();
     }
 }
