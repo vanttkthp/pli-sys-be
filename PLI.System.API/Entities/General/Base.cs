@@ -6,7 +6,7 @@ namespace PLI.System.API.Entities.General
     public class Base<T>
     {
         [Key]
-        public T? Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();  // Tạo UUID mặc định
         public int? EntryBy { get; set; }
         public DateTime? EntryDate { get; set; }
         public int? UpdatedBy { get; set; }
