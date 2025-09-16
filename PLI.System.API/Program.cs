@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using PLI.System.API.Extensions;
-using PLI.System.Core.Common;
-using PLI.System.Infrastructure.Data;
+using PLI.System.API.Common;
+using PLI.System.API.Data;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
