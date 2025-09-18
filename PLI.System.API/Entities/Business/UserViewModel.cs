@@ -4,7 +4,7 @@ namespace PLI.System.API.Entities.Business
 {
     public class UserViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string? FullName { get; set; }
         public string? EmployeeId { get; set; }
         public string? Email { get; set; }
@@ -29,10 +29,10 @@ namespace PLI.System.API.Entities.Business
         [Required]
         public int RoleId { get; set; }
     }
-
+     
     public class UserUpdateViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required, StringLength(100, MinimumLength = 2)]
         public string? FullName { get; set; }

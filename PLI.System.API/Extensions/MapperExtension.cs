@@ -4,7 +4,7 @@ using PLI.System.API.Entities.General;
 using PLI.System.API.Interfaces.IMapper;
 using PLI.System.API.Mapper;
 
-namespace Project.API.Extensions
+namespace PLI.System.API.Extensions
 {
     public static class MapperExtension
     {
@@ -15,6 +15,9 @@ namespace Project.API.Extensions
 
             services.AddSingleton<IMapper>(sp => new MapperConfiguration(cfg =>
             {
+                //cfg.CreateMap<Product, ProductViewModel>();
+                //cfg.CreateMap<ProductCreateViewModel, Product>();
+                //cfg.CreateMap<ProductUpdateViewModel, Product>();
 
                 cfg.CreateMap<Role, RoleViewModel>();
                 cfg.CreateMap<RoleCreateViewModel, Role>();
@@ -26,6 +29,9 @@ namespace Project.API.Extensions
             }).CreateMapper());
 
             // Register the IMapperService implementation with your dependency injection container
+            //services.AddSingleton<IBaseMapper<Product, ProductViewModel>, BaseMapper<Product, ProductViewModel>>();
+            //services.AddSingleton<IBaseMapper<ProductCreateViewModel, Product>, BaseMapper<ProductCreateViewModel, Product>>();
+            //services.AddSingleton<IBaseMapper<ProductUpdateViewModel, Product>, BaseMapper<ProductUpdateViewModel, Product>>();
 
             services.AddSingleton<IBaseMapper<Role, RoleViewModel>, BaseMapper<Role, RoleViewModel>>();
             services.AddSingleton<IBaseMapper<RoleCreateViewModel, Role>, BaseMapper<RoleCreateViewModel, Role>>();

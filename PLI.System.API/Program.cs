@@ -5,12 +5,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using PLI.System.API.Common;
 using PLI.System.API.Data;
-using PLI.System.API.Entities.General;
 using PLI.System.API.Extensions;
-using PLI.System.API.Interfaces.IRepositories;
-using PLI.System.API.Interfaces.IServices;
-using PLI.System.API.Repositories;
-using PLI.System.API.Services;
+using PLI.System.API.Middlewares;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,9 +30,9 @@ builder.Services.AddLogging(loggingBuilder =>
 
 // Register Services
 //builder.Services.RegisterSecurityService(builder.Configuration);
-//builder.Services.RegisterService();
-//builder.Services.RegisterMapperService();
-//builder.Services.AddAuthorization();
+builder.Services.RegisterService();
+builder.Services.RegisterMapperService();
+builder.Services.AddAuthorization();
 
 // API Versioning
 //builder.Services
@@ -47,21 +43,6 @@ builder.Services.AddLogging(loggingBuilder =>
 //        options.SubstituteApiVersionInUrl = true;
 //        options.DefaultApiVersion = new ApiVersion(1, 0);
 //    });
-// Add API Versioning
-builder.Services.AddApiVersioning(options =>
-{
-    options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.ApiVersionReader = ApiVersionReader.Combine(
-        new UrlSegmentApiVersionReader(),
-        new QueryStringApiVersionReader("version"),
-        new HeaderApiVersionReader("X-Version")
-    );
-}).AddApiExplorer(setup =>
-{
-    setup.GroupNameFormat = "'v'VVV";
-    setup.SubstituteApiVersionInUrl = true;
-});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
@@ -99,33 +80,54 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+//builder.Services.AddIdentity<PLI.System.API.Entities.General.User, IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultTokenProviders();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Or if you're using IdentityCore:
+//builder.Services.AddIdentityCore<PLI.System.API.Entities.General.User>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultTokenProviders();
+
+//builder.Services.AddScoped<UserManager<PLI.System.API.Entities.General.User>>();
+//builder.Services.AddScoped<SignInManager<PLI.System.API.Entities.General.User>>();
+// Add API Versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new QueryStringApiVersionReader("version")
+    );
+})
+.AddApiExplorer(setup =>
+{
+    setup.GroupNameFormat = "'v'VVV";
+    setup.SubstituteApiVersionInUrl = true;
+});
 
 var app = builder.Build();
 
-
 // Database seeding
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 
-    //try
-    //{
-    //    var context = services.GetRequiredService<ApplicationDbContext>();
+//    try
+//    {
+//        var context = services.GetRequiredService<ApplicationDbContext>();
 
-    //    // Seed the database
-    //    await ApplicationDbContextSeed.SeedAsync(services, loggerFactory);
-    //}
-    //catch (Exception ex)
-    //{
-    //    var logger = loggerFactory.CreateLogger<Program>();
-    //    logger.LogError(ex, "An error occurred while seeding the database.");
-    //}
-}
+//        // Seed the database
+//        await ApplicationDbContextSeed.SeedAsync(services, loggerFactory);
+//    }
+//    catch (Exception ex)
+//    {
+//        var logger = loggerFactory.CreateLogger<Program>();
+//        logger.LogError(ex, "An error occurred while seeding the database.");
+//    }
+//}
 
 if (app.Environment.IsDevelopment())
 {
@@ -152,7 +154,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 #region Custom Middleware
-//app.UseMiddleware<RequestResponseLoggingMiddleware>();
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
+
 #endregion
 
 app.UseEndpoints(endpoints =>
