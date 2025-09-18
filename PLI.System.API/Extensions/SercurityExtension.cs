@@ -1,40 +1,50 @@
-﻿using AutoMapper;
-using PLI.System.API.Entities.Business;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using PLI.System.API.Data;
 using PLI.System.API.Entities.General;
-using PLI.System.API.Interfaces.IMapper;
-using PLI.System.API.Mapper;
+using System.Text;
 
 namespace PLI.System.API.Extensions
 {
-    public static class MapperExtension
+    public static class SecurityExtension
     {
-        public static IServiceCollection RegisterMapperService(this IServiceCollection services)
+        public static IServiceCollection RegisterSecurityService(this IServiceCollection services, IConfiguration configuration)
         {
+            #region Identity
+            //services.AddIdentity<User, Role>(options =>
+            //{
+            //    options.Password.RequireDigit = true;
+            //    options.Password.RequireLowercase = true;
+            //    options.Password.RequiredLength = 6;
+            //}).AddEntityFrameworkStores<ApplicationDbContext>()
+            //.AddDefaultTokenProviders();
 
-            #region Mapper
+            #endregion
 
-            services.AddSingleton<IMapper>(sp => new MapperConfiguration(cfg =>
-            {
-
-
-                cfg.CreateMap<Role, RoleViewModel>();
-                cfg.CreateMap<RoleCreateViewModel, Role>();
-                cfg.CreateMap<RoleUpdateViewModel, Role>();
-
-                cfg.CreateMap<User, UserViewModel>();
-                cfg.CreateMap<UserViewModel, User>();
-
-            }).CreateMapper());
-
-            // Register the IMapperService implementation with your dependency injection container
-
-            services.AddSingleton<IBaseMapper<Role, RoleViewModel>, BaseMapper<Role, RoleViewModel>>();
-            services.AddSingleton<IBaseMapper<RoleCreateViewModel, Role>, BaseMapper<RoleCreateViewModel, Role>>();
-            services.AddSingleton<IBaseMapper<RoleUpdateViewModel, Role>, BaseMapper<RoleUpdateViewModel, Role>>();
-
-            services.AddSingleton<IBaseMapper<User, UserViewModel>, BaseMapper<User, UserViewModel>>();
-            services.AddSingleton<IBaseMapper<UserViewModel, User>, BaseMapper<UserViewModel, User>>();
-
+            #region JWT
+            //services.AddAuthentication(options =>
+            //{
+            //    //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(jwt =>
+            //{
+            //    var key = Encoding.ASCII.GetBytes(configuration["AppSettings:JwtConfig:Secret"]);
+            //    jwt.SaveToken = true;
+            //    jwt.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(key),
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidAudience = configuration["AppSettings:JwtConfig:ValidAudience"],
+            //        ValidIssuer = configuration["AppSettings:JwtConfig:ValidIssuer"],
+            //        ValidateLifetime = true,
+            //        RequireExpirationTime = true,
+            //        ClockSkew = TimeSpan.Zero
+            //    };
+            //});
             #endregion
 
             return services;
