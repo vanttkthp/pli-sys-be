@@ -10,29 +10,29 @@ namespace PLI.System.API.Repositories
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
+        //private readonly RoleManager<Role> _roleManager;
         private readonly IUserContext _userContext;
 
         public UserRepository(
             ApplicationDbContext dbContext,
-            UserManager<User> userManager,
-            RoleManager<Role> roleManager,
+            //UserManager<User> userManager,
+            //RoleManager<Role> roleManager,
             IUserContext userContext
             ) : base(dbContext)
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
+            //_userManager = userManager;
+            //_roleManager = roleManager;
             _userContext = userContext;
         }
 
-        public async Task<IdentityResult> Create(UserCreateViewModel model)
+        public async Task<int> Create(UserCreateViewModel model)
         {
             // Check if the role exists by Id, if not, return an error
-            var role = await _roleManager.FindByIdAsync(model.RoleId.ToString());
-            if (role == null)
-            {
-                return IdentityResult.Failed(new IdentityError { Code = "RoleNotFound", Description = $"Role with Id {model.RoleId} not found." });
-            }
+            //var role = await _roleManager.FindByIdAsync(model.RoleId.ToString());
+            //if (role == null)
+            //{
+            //    //return IdentityResult.Failed(new IdentityError { Code = "RoleNotFound", Description = $"Role with Id {model.RoleId} not found." });
+            //}
 
             //if (!role.IsActive)
             //{
@@ -49,61 +49,65 @@ namespace PLI.System.API.Repositories
                 EntryDate = DateTime.Now,
                 EntryBy = Convert.ToInt32(_userContext.UserId)
             };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            //var result = await _userManager.CreateAsync(user, model.Password);
 
             // If user creation is successful, assign the role to the user
             //if (result.Succeeded)
             //{
             //    await _userManager.AddToRoleAsync(user, role.Name);
             //}
+            var result = 0;
 
             return result;
         }
 
-        public async Task<IdentityResult> Update(UserUpdateViewModel model)
+        public async Task<int> Update(UserUpdateViewModel model)
         {
-            var user = await _userManager.FindByIdAsync(model.Id.ToString());
-
-            if (user == null)
-            {
-                return IdentityResult.Failed(new IdentityError { Description = "User not found." });
-            }
-
-            // Check if the role exists by Id, if not, return an error
-            var role = await _roleManager.FindByIdAsync(model.RoleId.ToString());
-            if (role == null)
-            {
-                return IdentityResult.Failed(new IdentityError { Code = "RoleNotFound", Description = $"Role with Id {model.RoleId} not found." });
-            }
-
-            //if (!role.IsActive)
-            //{
-            //    return IdentityResult.Failed(new IdentityError { Code = "RoleInactive", Description = $"Inactive Role" });
-            //}
-
-            // Update the user properties
-            user.FullName = model.FullName;
-            user.EmployeeId = model.EmployeeId;
-            user.Email = model.Email;
-            //user.RoleId = model.RoleId;
-            user.UpdatedDate = DateTime.Now;
-            user.UpdatedBy = Convert.ToInt32(_userContext.UserId);
-
-            var result = await _userManager.UpdateAsync(user);
-
-            // If user update is successful, assign the role to the user
-            //if (result.Succeeded)
-            //{
-            //    // Remove existing roles
-            //    var userRoles = await _userManager.GetRolesAsync(user);
-            //    await _userManager.RemoveFromRolesAsync(user, userRoles);
-
-            //    // Add the new role
-            //    await _userManager.AddToRoleAsync(user, role.Name);
-            //}
-
-            return result;
+            return 0;
         }
+        //{
+        //    var user = await _userManager.FindByIdAsync(model.Id.ToString());
+
+        //    if (user == null)
+        //    {
+        //        return IdentityResult.Failed(new IdentityError { Description = "User not found." });
+        //    }
+
+        //    // Check if the role exists by Id, if not, return an error
+        //    var role = await _roleManager.FindByIdAsync(model.RoleId.ToString());
+        //    if (role == null)
+        //    {
+        //        return IdentityResult.Failed(new IdentityError { Code = "RoleNotFound", Description = $"Role with Id {model.RoleId} not found." });
+        //    }
+
+        //    //if (!role.IsActive)
+        //    //{
+        //    //    return IdentityResult.Failed(new IdentityError { Code = "RoleInactive", Description = $"Inactive Role" });
+        //    //}
+
+        //    // Update the user properties
+        //    user.FullName = model.FullName;
+        //    user.EmployeeId = model.EmployeeId;
+        //    user.Email = model.Email;
+        //    //user.RoleId = model.RoleId;
+        //    user.UpdatedDate = DateTime.Now;
+        //    user.UpdatedBy = Convert.ToInt32(_userContext.UserId);
+
+        //    var result = await _userManager.UpdateAsync(user);
+
+        //    // If user update is successful, assign the role to the user
+        //    //if (result.Succeeded)
+        //    //{
+        //    //    // Remove existing roles
+        //    //    var userRoles = await _userManager.GetRolesAsync(user);
+        //    //    await _userManager.RemoveFromRolesAsync(user, userRoles);
+
+        //    //    // Add the new role
+        //    //    await _userManager.AddToRoleAsync(user, role.Name);
+        //    //}
+
+        //    return result;
+        //}
 
         //public async Task<IdentityResult> ResetPassword(ResetPasswordViewModel model)
         //{
