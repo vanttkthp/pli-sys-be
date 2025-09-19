@@ -34,22 +34,6 @@ namespace PLI.System.Core.Services
             return paginatedDataViewModel;
         }
 
-        public virtual async Task<PaginatedDataViewModel<TViewModel>> GetPaginatedData(int pageNumber, int pageSize, List<ExpressionFilter> filters, CancellationToken cancellationToken)
-        {
-            var paginatedData = await _repository.GetPaginatedData(pageNumber, pageSize, filters, cancellationToken);
-            var mappedData = _viewModelMapper.MapList(paginatedData.Data);
-            var paginatedDataViewModel = new PaginatedDataViewModel<TViewModel>(mappedData.ToList(), paginatedData.TotalCount);
-            return paginatedDataViewModel;
-        }
-
-        public virtual async Task<PaginatedDataViewModel<TViewModel>> GetPaginatedData(int pageNumber, int pageSize, List<ExpressionFilter> filters, string sortBy, string sortOrder, CancellationToken cancellationToken)
-        {
-            var paginatedData = await _repository.GetPaginatedData(pageNumber, pageSize, filters, sortBy, sortOrder, cancellationToken);
-            var mappedData = _viewModelMapper.MapList(paginatedData.Data);
-            var paginatedDataViewModel = new PaginatedDataViewModel<TViewModel>(mappedData.ToList(), paginatedData.TotalCount);
-            return paginatedDataViewModel;
-        }
-
         public virtual async Task<TViewModel> GetById<Tid>(Tid id, CancellationToken cancellationToken)
         {
             return _viewModelMapper.MapModel(await _repository.GetById(id, cancellationToken));

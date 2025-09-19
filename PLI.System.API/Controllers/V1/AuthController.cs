@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using PLI.System.API.Common;
-using PLI.System.API.Entities.Business;
-using PLI.System.API.Helpers;
 using PLI.System.API.Interfaces.IServices;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using PLI.System.API.Mapper.Dto;
+using PLI.System.API.Middlewares;
 
 namespace PLI.System.API.Controllers.V1
 {
@@ -17,16 +11,53 @@ namespace PLI.System.API.Controllers.V1
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        private readonly IAuthService _authService;
-        private readonly IConfiguration _configuration;
-        private readonly AppSettings _appSettings;
+        private readonly IAuthServices _authServices;
 
+        public AuthController(ILogger<AuthController> logger, IAuthServices authServices)
+        {
+            _logger = logger;
+            _authServices = authServices;
+        }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        {
+            try
+            {
+                var token = await _authServices.LoginAsync(dto);
+                return Ok(new
+                {
+                    message = "Login successful",
+                    token = token
+                });
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+        }
 
+        [HttpPost("logout")]
+        //[AuthorizeWithDb]
+        public async Task<IActionResult> Logout([FromQuery] string email)
+        {
+            try
+            {
+                await _authServices.LogoutAsync(email);
+                return Ok(new { message = "Logout successful" });
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
 
-
-
-
+        [HttpGet("status")]
+        public async Task<IActionResult> CheckStatus([FromQuery] string email)
+        {
+            var isLoggedIn = await _authServices.CheckLoginStatusAsync(email);
+            return Ok(new { loggedIn = isLoggedIn });
+        }
     }
 
 }

@@ -1,16 +1,13 @@
 ﻿using PLI.System.API.Entities.Business;
+using PLI.System.API.Entities.General;
 using PLI.System.API.Interfaces.IServices;
+using PLI.System.API.Mapper.Dto;
 
 namespace PLI.System.API.Interfaces.IServices
 {
-    public interface IUserService : IBaseService<UserViewModel>
+    public interface IUserService
     {
-        new Task<IEnumerable<UserViewModel>> GetAll(CancellationToken cancellationToken);
-        new Task<PaginatedDataViewModel<UserViewModel>> GetPaginatedData(int pageNumber, int pageSize, CancellationToken cancellationToken);
-        Task<UserViewModel> GetById(int id, CancellationToken cancellationToken);
-        Task<ResponseViewModel> Create(UserCreateViewModel model, CancellationToken cancellationToken);
-        Task<ResponseViewModel> Update(UserUpdateViewModel model, CancellationToken cancellationToken);
-        Task Delete(int id, CancellationToken cancellationToken);
-        //Task<ResponseViewModel> ResetPassword(ResetPasswordViewModel model);
+        Task<User> RegisterAsync(RegisterUserDto dto);
+        Task<User?> GetByEmailAsync(string email);
     }
 }

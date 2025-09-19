@@ -11,15 +11,12 @@ namespace PLI.System.API.Extensions
         {
             #region Services
             services.AddSingleton<IUserContext, UserContext>();
-            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
 
             #endregion
 
             #region Repositories
-            services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IAuthRepository, AuthRepository>();
 
             #endregion
 
