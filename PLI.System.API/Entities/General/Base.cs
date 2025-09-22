@@ -3,7 +3,7 @@
 namespace PLI.System.API.Entities.General
 {
     //Base class for entities common properties
-    public class Base<T>
+    public class Base
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();  // Tạo UUID mặc định

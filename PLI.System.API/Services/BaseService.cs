@@ -4,7 +4,7 @@ using PLI.System.API.Entities.Business;
 using PLI.System.API.Interfaces.IRepositories;
 using PLI.System.API.Interfaces.IServices;
 
-namespace PLI.System.Core.Services
+namespace PLI.System.API.Services
 {
     public class BaseService<T, TViewModel> : IBaseService<TViewModel>
         where T : class

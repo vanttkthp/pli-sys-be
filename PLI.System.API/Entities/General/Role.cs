@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PLI.System.API.Entities.General
 {
-    public class Role : Base<int>
+    public class Role : Base
     {
 
     }

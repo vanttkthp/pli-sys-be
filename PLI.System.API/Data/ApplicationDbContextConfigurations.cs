@@ -10,6 +10,7 @@ namespace PLI.System.API.Data
         {
             // Configure custom entities
             builder.Entity<User>().ToTable("Users");
+            builder.Entity<Attendant>().ToTable("Attendants");
 
             // Add any additional entity configurations here
 

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PLI.System.API.Entities.General
 {
-    public class User : Base<int>
+    public class User : Base
     {
         [Required, StringLength(maximumLength: 100, MinimumLength = 2)]
         public string FullName { get; set; }
