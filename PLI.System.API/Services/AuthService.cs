@@ -11,7 +11,7 @@ using System.Text;
 
 namespace PLI.System.API.Services
 {
-    public class AuthService : IAuthServices
+    public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepo;
         private readonly IConfiguration _config;

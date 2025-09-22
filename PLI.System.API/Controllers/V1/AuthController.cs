@@ -11,9 +11,9 @@ namespace PLI.System.API.Controllers.V1
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        private readonly IAuthServices _authServices;
+        private readonly IAuthService _authServices;
 
-        public AuthController(ILogger<AuthController> logger, IAuthServices authServices)
+        public AuthController(ILogger<AuthController> logger, IAuthService authServices)
         {
             _logger = logger;
             _authServices = authServices;

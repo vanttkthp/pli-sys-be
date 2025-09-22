@@ -3,7 +3,7 @@ using PLI.System.API.Mapper.Dto;
 
 namespace PLI.System.API.Interfaces.IServices
 {
-    public interface IAuthServices
+    public interface IAuthService
     {
         Task<string> LoginAsync(LoginDto dto);
         Task LogoutAsync(string email);
