@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PLI.System.API.Data;
 
@@ -11,9 +12,11 @@ using PLI.System.API.Data;
 namespace PLI.System.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250919071255_SecondMigration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,61 +69,6 @@ namespace PLI.System.API.Migrations
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("PLI.System.API.Entities.General.Attendant", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("AttendanceTime")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("EntryBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("EntryDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool?>("Fulltime")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("JobDescription")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool?>("Parttime")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<int?>("Rank")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("ScheduleId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("TeamId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Attendants", (string)null);
-                });
-
             modelBuilder.Entity("PLI.System.API.Entities.General.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -142,12 +90,6 @@ namespace PLI.System.API.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
-
-                    b.Property<int?>("EntryBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("EntryDate")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -288,7 +230,6 @@ namespace PLI.System.API.Migrations
             modelBuilder.Entity("PLI.System.API.Entities.General.User", b =>
                 {
                     b.Navigation("UserPermissions");
-                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.Mail;
 
 namespace PLI.System.API.Entities.General
 {
-    public class User : Base<int>
+    [Index(nameof(Email), IsUnique = true)]
+    [Index(nameof(EmployeeId), IsUnique = true)]
+    public class User : Base
     {
         [Required, StringLength(maximumLength: 100, MinimumLength = 2)]
         public string FullName { get; set; }
@@ -17,5 +19,7 @@ namespace PLI.System.API.Entities.General
         public string Email { get; set; }
         public string? Organization { get; set; }
         public string? JobDescription { get; set; }
+
+        public ICollection<UserPermission> UserPermissions { get; set; }
     }
 }

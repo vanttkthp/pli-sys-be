@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using PLI.System.API.Entities.Business;
-using PLI.System.API.Entities.General;
+﻿using PLI.System.API.Entities.General;
 
 namespace PLI.System.API.Interfaces.IRepositories
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IUserRepository
     {
-        Task<int> Create(UserCreateViewModel model);
-        Task<int> Update(UserUpdateViewModel model);
-        //Task<IdentityResult> ResetPassword(ResetPasswordViewModel model);
+        Task<User?> GetByEmailAsync(string email);
+        Task<User> AddAsync(User user);
     }
 }

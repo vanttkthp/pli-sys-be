@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PLI.System.API.Entities.Business;
-using PLI.System.API.Helpers;
+﻿using Microsoft.AspNetCore.Mvc;
 using PLI.System.API.Interfaces.IServices;
+using PLI.System.API.Mapper.Dto;
 
 namespace PLI.System.API.Controllers.V1
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
@@ -22,25 +18,33 @@ namespace PLI.System.API.Controllers.V1
             _userService = userService;
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
         {
             try
             {
-                var user = await _userService.GetById(id, cancellationToken);
-                if (user == null)
+                var user = await _userService.RegisterAsync(dto);
+                return Ok(new
                 {
-                    _logger.LogWarning("User with ID {UserId} not found.", id);
-                    return NotFound(new { message = $"User with ID {id} not found." });
-                }
-                return Ok(user);
+                    message = "User registered successfully.",
+                    data = new
+                    {
+                        user.Id,
+                        user.FullName,
+                        user.Email,
+                        user.EmployeeId,
+                        user.Organization,
+                        user.JobDescription
+                    }
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while fetching user with ID {UserId}", id);
-                return StatusCode(500, new { message = "An error occurred while processing your request." });
+                return BadRequest(new { message = ex.Message });
             }
         }
+
+
     }
 
 }

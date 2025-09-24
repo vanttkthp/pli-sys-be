@@ -21,10 +21,13 @@ namespace PLI.System.API.Extensions
 
                 cfg.CreateMap<Role, RoleViewModel>();
                 cfg.CreateMap<RoleCreateViewModel, Role>();
-                cfg.CreateMap<RoleUpdateViewModel, Role>();
 
                 cfg.CreateMap<User, UserViewModel>();
                 cfg.CreateMap<UserViewModel, User>();
+
+                cfg.CreateMap<Attendant, AttendantViewModel>();
+                cfg.CreateMap<AttendantViewModel, Attendant>();
+                cfg.CreateMap<AttendantCreateViewModel, Attendant>();
 
             }).CreateMapper());
 
@@ -35,10 +38,13 @@ namespace PLI.System.API.Extensions
 
             services.AddSingleton<IBaseMapper<Role, RoleViewModel>, BaseMapper<Role, RoleViewModel>>();
             services.AddSingleton<IBaseMapper<RoleCreateViewModel, Role>, BaseMapper<RoleCreateViewModel, Role>>();
-            services.AddSingleton<IBaseMapper<RoleUpdateViewModel, Role>, BaseMapper<RoleUpdateViewModel, Role>>();
 
             services.AddSingleton<IBaseMapper<User, UserViewModel>, BaseMapper<User, UserViewModel>>();
             services.AddSingleton<IBaseMapper<UserViewModel, User>, BaseMapper<UserViewModel, User>>();
+
+            services.AddSingleton<IBaseMapper<Attendant, AttendantViewModel>, BaseMapper<Attendant, AttendantViewModel>>();
+            services.AddSingleton<IBaseMapper<AttendantViewModel, Attendant>, BaseMapper<AttendantViewModel, Attendant>>();
+            services.AddSingleton<IBaseMapper<AttendantCreateViewModel, Attendant>, BaseMapper<AttendantCreateViewModel, Attendant>>();
 
             #endregion
 
