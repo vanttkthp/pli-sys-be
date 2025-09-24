@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PLI.System.API.Entities.General
 {
     [Index(nameof(UserEmail), IsUnique = true)]
-    public class UserToken : Base<int>
+    public class UserToken : Base
     {
         [Required]
         public required string UserEmail { get; set; }

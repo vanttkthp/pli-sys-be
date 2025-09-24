@@ -6,6 +6,10 @@ using Microsoft.OpenApi.Models;
 using PLI.System.API.Common;
 using PLI.System.API.Data;
 using PLI.System.API.Extensions;
+using PLI.System.API.Interfaces.IRepositories;
+using PLI.System.API.Interfaces.IServices;
+using PLI.System.API.Services;
+using PLI.System.API.Repositories;
 using PLI.System.API.Middlewares;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -32,7 +36,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 // Register Services
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAuthServices, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 //builder.Services.RegisterSecurityService(builder.Configuration);
 builder.Services.RegisterService();
@@ -158,7 +162,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 #region Custom Middleware
-app.UseMiddleware<RequestResponseLoggingMiddleware>();
+//app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
 #endregion
 
