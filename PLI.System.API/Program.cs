@@ -17,7 +17,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 // Add caching services
 builder.Services.AddMemoryCache();
@@ -28,7 +27,13 @@ builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddSeq(builder.Configuration.GetSection("SeqConfig"));
 });
 
+// Register Repository
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 // Register Services
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthServices, AuthService>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
 //builder.Services.RegisterSecurityService(builder.Configuration);
 builder.Services.RegisterService();
 builder.Services.RegisterMapperService();
@@ -121,24 +126,11 @@ builder.Services.AddApiVersioning(options =>
 var app = builder.Build();
 
 // Database seeding
-//using (var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-//    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-
-//    try
-//    {
-//        var context = services.GetRequiredService<ApplicationDbContext>();
-
-//        // Seed the database
-//        await ApplicationDbContextSeed.SeedAsync(services, loggerFactory);
-//    }
-//    catch (Exception ex)
-//    {
-//        var logger = loggerFactory.CreateLogger<Program>();
-//        logger.LogError(ex, "An error occurred while seeding the database.");
-//    }
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+}
 
 if (app.Environment.IsDevelopment())
 {

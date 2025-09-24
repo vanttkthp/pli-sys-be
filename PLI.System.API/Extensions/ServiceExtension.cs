@@ -17,8 +17,6 @@ namespace PLI.System.API.Extensions
             // Then register the service that depends on it
             #region Services
             services.AddSingleton<IUserContext, UserContext>();
-            //services.AddScoped<IProductService, ProductService>();
-            //services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAttendantService, AttendantService>();
             //services.AddScoped<IAuthService, AuthService>();
@@ -26,8 +24,6 @@ namespace PLI.System.API.Extensions
             #endregion
 
             #region Repositories
-            //services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAttendantRepository, AttendantRepository>();
             //services.AddTransient<IAuthRepository, AuthRepository>();
