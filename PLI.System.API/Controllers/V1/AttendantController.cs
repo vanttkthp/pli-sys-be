@@ -100,6 +100,47 @@ namespace PLI.System.API.Controllers.V1
                 }
             });
         }
+        [HttpGet("team/{teamId}")]
+        public async Task<IActionResult> GetByTeamId(Guid teamId, CancellationToken cancellationToken)
+        {
+            var result = await _attendantService.GetAllByTeamId(teamId, cancellationToken);
+
+            return Ok(new ResponseViewModel<IEnumerable<AttendantViewModel>>
+            {
+                Success = true,
+                Message = "Fetched attendants by team successfully",
+                Data = result
+            });
+        }
+        [HttpPost("bulk-create")]
+        public async Task<IActionResult> BulkCreate(List<AttendantCreateViewModel> models, CancellationToken cancellationToken)
+        {
+            if (models == null || models.Count == 0)
+            {
+                return BadRequest(new { Success = false, Message = "No data provided" });
+            }
+
+            try
+            {
+                var result = await _attendantService.CreateMany(models, cancellationToken);
+                return Ok(new ResponseViewModel<List<AttendantViewModel>>
+                {
+                    Success = true,
+                    Message = "Attendants created successfully",
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Bulk create failed");
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Success = false,
+                    Message = "Bulk create failed",
+                    Error = ex.Message
+                });
+            }
+        }
     }
 
 }

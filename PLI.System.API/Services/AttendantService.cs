@@ -3,6 +3,8 @@ using PLI.System.API.Entities.General;
 using PLI.System.API.Interfaces.IMapper;
 using PLI.System.API.Interfaces.IRepositories;
 using PLI.System.API.Interfaces.IServices;
+using PLI.System.API.Repositories;
+using System.Linq.Expressions;
 
 namespace PLI.System.API.Services
 {
@@ -24,6 +26,11 @@ namespace PLI.System.API.Services
             _attendantRepository = attendantRepository;
         }
 
+        public async Task<IEnumerable<AttendantViewModel>> GetAllByTeamId(Guid teamId, CancellationToken cancellationToken)
+        {
+            var entities = await _attendantRepository.GetAllByTeamId(teamId, cancellationToken);
+            return _attendantViewModelMapper.MapList(entities);
+        }
         public async Task<AttendantViewModel> Create(AttendantCreateViewModel model, CancellationToken cancellationToken)
         {
             //Mapping through AutoMapper
@@ -34,6 +41,35 @@ namespace PLI.System.API.Services
 
             return _attendantViewModelMapper.MapModel(await _attendantRepository.Create(entity, cancellationToken));
         }
+
+        public async Task<List<AttendantViewModel>> CreateMany(List<AttendantCreateViewModel> models, CancellationToken cancellationToken)
+        {
+            if (models == null || models.Count == 0)
+                return new List<AttendantViewModel>();
+
+            // Map and set properties
+            var entities = models.Select(m =>
+            {
+                var entity = _attendantCreateMapper.MapModel(m);
+                entity.EntryDate = DateTime.Now;
+                return entity;
+            }).ToList();
+
+            // ✅ If your repository supports bulk insert:
+            var savedEntities = await _attendantRepository.CreateMany(entities, cancellationToken);
+
+            // ❌ If repository doesn’t support bulk, fallback:
+            // var savedEntities = new List<Attendant>();
+            // foreach (var entity in entities)
+            // {
+            //     var saved = await _attendantRepository.Create(entity, cancellationToken);
+            //     savedEntities.Add(saved);
+            // }
+
+            // Map back to ViewModels
+            return savedEntities.Select(e => _attendantViewModelMapper.MapModel(e)).ToList();
+        }
+
 
     }
 }

@@ -2,7 +2,6 @@
 {
     public class AttendantViewModel
     {
-        public string Id { get; set; }
         public string? FullName { get; set; }
         public string? Organization { get; set; }
         public string? AttendanceTime { get; set; }
