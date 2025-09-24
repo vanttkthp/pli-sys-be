@@ -48,6 +48,17 @@ builder.Services.AddAuthorization();
 //        options.SubstituteApiVersionInUrl = true;
 //        options.DefaultApiVersion = new ApiVersion(1, 0);
 //    });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // FE port
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
@@ -138,6 +149,7 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
+app.UseCors("AllowFrontend");
 
 app.UseStaticFiles();
 app.UseRouting(); // Add this line to configure routing

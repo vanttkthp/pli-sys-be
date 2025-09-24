@@ -1,5 +1,6 @@
 ﻿using PLI.System.API.Common;
 using PLI.System.API.Entities.General;
+using PLI.System.API.Interfaces.IMapper;
 using PLI.System.API.Interfaces.IRepositories;
 using PLI.System.API.Interfaces.IServices;
 using PLI.System.API.Mapper.Dto;
@@ -54,5 +55,21 @@ namespace PLI.System.API.Services
 
             return await _repo.AddAsync(user);
         }
+
+        //Task<ResponseViewModel> IUserService.Create(UserCreateViewModel model, CancellationToken cancellationToken)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //Task<ResponseViewModel> IUserService.Update(UserUpdateViewModel model, CancellationToken cancellationToken)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //Task IUserService.Delete(int id, CancellationToken cancellationToken)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
     }
 }

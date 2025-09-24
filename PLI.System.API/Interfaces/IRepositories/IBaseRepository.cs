@@ -20,5 +20,6 @@ namespace PLI.System.API.Interfaces.IRepositories
         Task Update(T model, CancellationToken cancellationToken);
         Task Delete(T model, CancellationToken cancellationToken);
         Task SaveChangeAsync(CancellationToken cancellationToken);
+
     }
 }

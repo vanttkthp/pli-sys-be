@@ -7,6 +7,7 @@ namespace PLI.System.API.Entities.General
     [Index(nameof(Email), IsUnique = true)]
     [Index(nameof(EmployeeId), IsUnique = true)]
     public class User : Base<int>
+    public class User : Base
     {
         [Required, StringLength(maximumLength: 100, MinimumLength = 2)]
         public string FullName { get; set; }

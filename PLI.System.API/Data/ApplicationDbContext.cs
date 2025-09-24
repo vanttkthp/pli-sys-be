@@ -14,6 +14,8 @@ namespace PLI.System.API.Data
         #region DbSet Section
         // Ví dụ:
         public DbSet<User> Users { get; set; }
+        public DbSet<Attendant> Attendants { get; set; }
+        // public DbSet<Product> Products { get; set; }
         public DbSet<UserToken> UserTokens { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
@@ -22,6 +24,7 @@ namespace PLI.System.API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            ApplicationDbContextConfigurations.Configure(modelBuilder);
 
             modelBuilder.Entity<User>()
                 .HasAlternateKey(u => u.Email);
