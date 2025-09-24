@@ -37,7 +37,7 @@ namespace PLI.System.API.Services
             var entity = _attendantCreateMapper.MapModel(model);
 
             // Set additional properties or perform other logic as needed
-            entity.EntryDate = DateTime.Now;
+            entity.CreatedAt = DateTime.Now;
 
             return _attendantViewModelMapper.MapModel(await _attendantRepository.Create(entity, cancellationToken));
         }
@@ -51,7 +51,7 @@ namespace PLI.System.API.Services
             var entities = models.Select(m =>
             {
                 var entity = _attendantCreateMapper.MapModel(m);
-                entity.EntryDate = DateTime.Now;
+                entity.CreatedAt = DateTime.Now;
                 return entity;
             }).ToList();
 
